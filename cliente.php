@@ -10,7 +10,7 @@ require_once('crud/buscador_cli.php');
 ?>
 
 <div class="container mt-5">
-    <h1 class="mt-5">Clientes</h1>
+    <h1 class="mt-5">Cliente</h1>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-inline my-2 my-lg-0">
         <div class="row">
             <div class="col">
