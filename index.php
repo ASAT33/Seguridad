@@ -11,7 +11,7 @@
 <div class="container mt-5 d-flex justify-content-center">
     <div class="formulario">
             <h1>Bienvenido</h1>
-            <form action="crud/login.php" method="post" class="text-center">
+            <form action="./crud/login.php" method="post" class="text-center">
                 <div class="form-group">
                     <label for="username">Correo:</label>
                     <input type="text" class="form-control text-center" id="username" name="username" required>

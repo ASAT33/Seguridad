@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
         if ($e->getCode() == 1062) {
  
-            $mensaje_error = 'Usuario ya existe.';
+            $mensaje_error = 'La cédula o el nombre de usuario ya existen.';
         } else {
   
             $mensaje_error = 'Ha ocurrido un error inesperado.';

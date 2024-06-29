@@ -36,23 +36,3 @@ h1 {
     width: 250px;
     margin-bottom: 10px;
 }
-
-
-#wraper{
-    width: 100%;
-}
-#page_wrapper{
-
-    padding:  0 15px;
-    min-height: 560px;
-    background-color: #007bff;
-
-
-}
-
-
-element.style {
-    position: inherit;
-    margin: 23px 6px;
-    width: 25%;
-}

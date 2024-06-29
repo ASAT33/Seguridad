@@ -21,17 +21,20 @@ class funciones extends modeloCredencialesBD{
     public function verificar_login($username, $password) {
         $query = "CALL sp_verificar_login('$username')";
         $result = $this->_db->query($query);
+        
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $stored_password_hash = $row['contrasena'];
+            $stored_password = $row['contrasena'];
     
-            if (password_verify($password, $stored_password_hash)) {
+            // Verificar la contraseña en texto plano
+            if ($password === $stored_password) {
                 return true;
             }
         }
-
+    
         return false;
     }
+    
     
     public function usuario_existente($username) {
         $query = "CALL sp_verificar_usuario(?)";
@@ -44,9 +47,8 @@ class funciones extends modeloCredencialesBD{
     //placeholders = ??
     public function registrar_usuario($id_cedula, $nombre, $username, $password) {
         $query = "CALL sp_registrar(?, ?, ?, ?)";
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $this->_db->prepare($query);
-        $stmt->bind_param("ssss", $id_cedula, $nombre, $username, $hashed_password);
+        $stmt->bind_param("ssss", $id_cedula, $nombre, $username, $password);
         $result = $stmt->execute();
         $stmt->close();
     

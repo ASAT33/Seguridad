@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $telefono = $_POST['telefono'];
     $correo = $_POST['correo'];
 
-   
+    $id_cedula = str_replace("-", "", $id_cedula);
 
     $obj_funciones = new funciones();
 
