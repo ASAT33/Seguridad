@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-06-2024 a las 08:23:56
+-- Tiempo de generación: 29-06-2024 a las 08:37:57
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -157,7 +157,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_registrar_cliente` (IN `p_id_ced
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_verificar_login` (IN `p_username` VARCHAR(255))   BEGIN
-    SELECT contrasena FROM usuario WHERE correo = p_username;
+    SELECT contrasena FROM usuario WHERE id_cedula = p_username;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_verificar_usuario` (IN `p_username` VARCHAR(255))   BEGIN
