@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-12-2023 a las 21:34:23
+-- Tiempo de generación: 29-06-2024 a las 08:23:56
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -144,8 +144,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_prueba` (IN `p_cedula_cliente` V
 
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_registrar` (IN `p_id_cedula` VARCHAR(255), IN `p_nombre` VARCHAR(255), IN `p_username` VARCHAR(255), IN `p_password` VARCHAR(255))   BEGIN
-    INSERT INTO usuario (id_cedula, nombre, correo, contrasena) VALUES (p_id_cedula, p_nombre, p_username, p_password);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_registrar` (IN `p_id_cedula` VARCHAR(20), IN `p_nombre` VARCHAR(100), IN `p_username` VARCHAR(100), IN `p_password` VARCHAR(255))   BEGIN
+    INSERT INTO usuario (id_cedula, nombre, correo, contrasena)
+    VALUES (p_id_cedula, p_nombre, p_username, p_password);
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_registrar_cliente` (IN `p_id_cedula` VARCHAR(20), IN `p_nombre` VARCHAR(255), IN `p_telefono` VARCHAR(255), IN `p_correo` VARCHAR(255))   BEGIN
@@ -183,7 +184,9 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`id_cedula`, `nombre`, `telefono`, `correo`) VALUES
-('8-992-1814', 'Abdiel', '63', 'a@gmail.com');
+('8-992-1814', 'Abdiel', '61234568', 'red@gmail.com'),
+('8-992-1819', 'Juan', '61234568', 'red@gmail.com'),
+('8-993-1374', 'Ashley', '6666666', 'ashley@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -200,6 +203,17 @@ CREATE TABLE `pagos` (
   `fecha` date DEFAULT curdate()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `pagos`
+--
+
+INSERT INTO `pagos` (`id`, `cedula_cliente`, `nombre_cliente`, `capital`, `interes`, `fecha`) VALUES
+(4, '8-992-1814', 'Abdiel', 20.00, 1.00, '2023-12-13'),
+(5, '8-992-1814', 'Abdiel', -20.00, 1.00, '2023-12-13'),
+(6, '8-992-1814', 'Abdiel', -20.00, 1.00, '2023-12-13'),
+(7, '8-993-1374', 'Ashley', 10000.00, 999.99, '2024-06-24'),
+(8, '8-992-1814', 'Abdiel', 2.00, 2.00, '2024-06-28');
+
 -- --------------------------------------------------------
 
 --
@@ -215,6 +229,15 @@ CREATE TABLE `prestamo` (
   `plazo` int(11) DEFAULT NULL,
   `int_calculado` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `prestamo`
+--
+
+INSERT INTO `prestamo` (`id_prestamo`, `id_cedula`, `nombre_cliente`, `cantidad_prestada`, `interes`, `plazo`, `int_calculado`) VALUES
+(5, '8-992-1819', 'Juan', 300.00, 2.00, 10, 60.00),
+(6, '8-992-1814', 'Abdiel', 318.00, 10.00, 2, 55.00),
+(8, '8-993-1374', 'Ashley', 20000.00, 5.00, 12, 0.00);
 
 -- --------------------------------------------------------
 
@@ -234,10 +257,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_cedula`, `nombre`, `correo`, `contrasena`) VALUES
-('8-985-7777', 'Abdiel', 'a89@gmail.com', '$2y$10$1L0W8ZfH6DxDV1OPUDL2J.12Q8jqtKoRp7KOXRXpQ87Zsit6zCe2m'),
-('8-992-1819', 'Abdiel', 'a4@gmail.com', '$2y$10$vzVvng4S/cduAgi.XEgx8.ElsnMhmOTxZNlgwvhdO9p6g2bk5P.VK'),
-('8555555', 'Abdiel', 'a123@gmail.com', '$2y$10$OU/U/Es4pr2cFhy5s5fgIuRgB9QksZtDM.pWGmGKs6PpUTMvgOVXK'),
-('98', 'hola', 'a3@gmail.com', '$2y$10$xnGdQ71uquRANtBYS9mGFeV8yUYh9GknFy4/5mhxS0AdxaFPmfc1e');
+('8-992-1417', 'Antonio', 'a@gmail.com', '$2y$10$JrbFi22N/dbCHClHVXz88OQoFIdRvjlJMPS7xhUSvSAhr0gsXh63W'),
+('98', 'hola', 'a3@gmail.com', 'a');
 
 --
 -- Índices para tablas volcadas
@@ -277,13 +298,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas

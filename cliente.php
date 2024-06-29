@@ -10,7 +10,7 @@ require_once('crud/buscador_cli.php');
 ?>
 
 <div class="container mt-5">
-    <h1 class="mt-5">Cliente</h1>
+    <h1 class="mt-5">Clientes</h1>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-inline my-2 my-lg-0">
         <div class="row">
             <div class="col">
@@ -19,7 +19,7 @@ require_once('crud/buscador_cli.php');
             <div class="col">
                 <select class="form-control" name="search_field">
                     <option value="id_cedula">Cedula</option>
-                    <option value="nombre">Nombre Cliente</option>
+                    <option value="nombre_cliente">Nombre Cliente</option>
                 </select>
             </div>
             <div class="col">

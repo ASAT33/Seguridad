@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-
+ 
 <div class="container mt-5 d-flex justify-content-center">
     <div class="formulario">
         <h1>Registro de Usuario</h1>
-        <form action="crud/registro.php" method="post">
+        <form action="./crud/registro.php" method="post">
             <div class="form-group">       
                 <label for="id_cedula">ID Cedula:</label>
                 <input type="text" class="form-control" id="id_cedula" name="id_cedula" pattern="/^\d{2}-\d{4}-\d{4}|\d{1}-\d{3}-\d{4}|\d{1}-\d{3}-\d{3}$/" title="Formato válido: xx-xxxx-xxxx" required>
@@ -46,3 +46,8 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+</body>
+</html>

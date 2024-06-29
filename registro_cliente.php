@@ -7,7 +7,7 @@ if (!isset($_SESSION['username'])) {
 }
 ?>
 
-<div class="container mt-4">
+<div class="container mt-5">
     <h1>Registro de Cliente</h1>
     <form action="crud/registrar_cliente.php" method="post">
         <div class="form-group col-md-4">

@@ -1,8 +1,10 @@
 <?php
 session_start();
-require_once('../class/functions.php');
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+require_once('../class/functions.php');
     $username = $_POST['username'];
     $password = $_POST['password'];
 
