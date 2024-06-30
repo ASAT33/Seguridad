@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $obj_funciones = new funciones();
-    
+    //$hashed_password = password_hash($password, PASSWORD_DEFAULT);
     try {
   
         $registro_exitoso = $obj_funciones->registrar_usuario($id_cedula, $nombre, $username, $password);
