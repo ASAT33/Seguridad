@@ -24,16 +24,17 @@ class funciones extends modeloCredencialesBD{
         
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $stored_password = $row['contrasena'];
+            $stored_hash = $row['contrasena'];
     
-            // Verificar la contraseña en texto plano
-            if ($password === $stored_password) {
+            // Verificar la contraseña utilizando password_verify
+            if (password_verify($password, $stored_hash)) {
                 return true;
             }
         }
     
         return false;
     }
+    
     
     
     public function usuario_existente($username) {
@@ -46,14 +47,17 @@ class funciones extends modeloCredencialesBD{
     }
     //placeholders = ??
     public function registrar_usuario($id_cedula, $nombre, $username, $password) {
+        // Hash de la contraseña
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $query = "CALL sp_registrar(?, ?, ?, ?)";
         $stmt = $this->_db->prepare($query);
-        $stmt->bind_param("ssss", $id_cedula, $nombre, $username, $password);
+        $stmt->bind_param("ssss", $id_cedula, $nombre, $username, $hashed_password);
         $result = $stmt->execute();
         $stmt->close();
     
         return $result;
     }
+    
     
     public function registrar_cliente($id_cedula, $nombre, $telefono, $correo) {
         $query = "CALL sp_registrar_cliente(?, ?, ?, ?)";

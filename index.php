@@ -10,7 +10,7 @@
 
 <div class="container mt-5 d-flex justify-content-center">
     <div class="formulario">
-            <h1>Bienvenido</h1>
+            <h1>Bienvenido</h1> 
             <form action="./crud/login.php" method="post" class="text-center">
                 <div class="form-group">
                     <label for="username">Correo:</label>
