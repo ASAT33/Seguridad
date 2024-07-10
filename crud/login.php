@@ -20,15 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../verificar_codigo.php");
             exit();
         } else {
-            header("Location: /index.php?error=2");
+            header("Location: ../index.php?error=2");
             exit();
         }
     } else {
-        header("Location: /index.php?error=1");
+        header("Location: ../index.php?error=1");
         exit();
     }
 } else {
-    header("Location: /index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
