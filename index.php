@@ -13,7 +13,7 @@
             <h1>Bienvenido</h1> 
             <form action="./crud/login.php" method="post" class="text-center">
                 <div class="form-group">
-                    <label for="username">Correo:</label>
+                    <label for="username">Cedula:</label>
                     <input type="text" class="form-control text-center" id="username" name="username" required>
                 </div>
                 <div class="form-group">
