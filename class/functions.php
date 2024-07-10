@@ -1,7 +1,7 @@
 <?php
 require_once('modelo.php');
 
-class funciones extends modeloCredencialesBD{
+class funciones extends modeloCredencialesBD {
     public function __construct() {
         parent::__construct();
     }
@@ -12,12 +12,13 @@ class funciones extends modeloCredencialesBD{
 
         if ($consulta) {
             $resultado = $consulta->fetch_all(MYSQLI_ASSOC);
-            $consulta->close(); 
+            $consulta->close();
             return $resultado;
         } else {
-                    return array();
+            return array();
         }
     }
+
     public function verificar_login($username, $password) {
         $query = "CALL sp_verificar_login('$username')";
         $result = $this->_db->query($query);
@@ -28,24 +29,14 @@ class funciones extends modeloCredencialesBD{
     
             // Verificar la contraseña utilizando password_verify
             if (password_verify($password, $stored_hash)) {
+                $result->close(); 
                 return true;
             }
         }
     
         return false;
     }
-    
-    
-    
-    public function usuario_existente($username) {
-        $query = "CALL sp_verificar_usuario(?)";
-        $stmt = $this->_db->prepare($query);
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return ($result->num_rows > 0);
-    }
-    //placeholders = ??
+
     public function registrar_usuario($id_cedula, $nombre, $username, $password) {
         // Hash de la contraseña
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -57,35 +48,34 @@ class funciones extends modeloCredencialesBD{
     
         return $result;
     }
-    
-    
+
     public function registrar_cliente($id_cedula, $nombre, $telefono, $correo) {
         $query = "CALL sp_registrar_cliente(?, ?, ?, ?)";
-    
         $stmt = $this->_db->prepare($query);
         $stmt->bind_param("ssss", $id_cedula, $nombre, $telefono, $correo);
         $result = $stmt->execute();
-        $stmt->close();
+        $stmt->close(); 
     
         return $result;
     }
-    
+
     public function insertar_prestamo($cedula_cliente, $cantidad_prestada, $interes, $plazo) {
         $query = "CALL sp_insertar_prestamo(?, ?, ?, ?)";
         $stmt = $this->_db->prepare($query);
         $stmt->bind_param("sssi", $cedula_cliente, $cantidad_prestada, $interes, $plazo);
         $result = $stmt->execute();
-        $stmt->close();
+        $stmt->close(); 
 
         return $result;
     }
-    
-    public function buscar_todo($cadena,$search, $search_field) {
+
+    public function buscar_todo($cadena, $search, $search_field) {
         $procedure = "CALL sp_buscar_"."$cadena('$search', '$search_field')";
         $consulta = $this->_db->query($procedure);
-    
+
         if ($consulta) {
             $resultados = $consulta->fetch_all(MYSQLI_ASSOC);
+            $consulta->close(); 
             return $resultados;
         } else {
             return array();
@@ -93,23 +83,30 @@ class funciones extends modeloCredencialesBD{
     }
 
     public function insertar_pago($cedula_cliente, $capital, $interes) {
-        
         $query = "CALL sp_prueba(?, ?, ?)";
         $stmt = $this->_db->prepare($query);
         $stmt->bind_param("sdd", $cedula_cliente, $capital, $interes);
         $result = $stmt->execute();
-    
+
         if (!$result) {
             echo "Error al ejecutar el procedimiento almacenado: " . $stmt->error;
         }
-    
-        $stmt->close();
+
+        $stmt->close(); 
         return $result;
     }
-    
 
-  
+    public function getUserEmail($username) {
+        $query = "CALL sp_get_user_email(?)";
+        $stmt = $this->_db->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->bind_result($email);
+        $stmt->fetch();
+        $stmt->close(); 
+
+        return $email;
+    }
 }
-
 
 ?>
