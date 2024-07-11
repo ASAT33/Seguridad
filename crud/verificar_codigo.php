@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($input_code == $session_code) {
 
-        header("Location: presentacion.php");
+        header("Location: ../presentacion.php");
         exit();
     } else {
 
