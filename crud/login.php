@@ -6,18 +6,18 @@ require_once('../crud/email_functions.php');
 $logFile = '../class/login_logs.log';
 
 define('MAX_FAILED_ATTEMPTS', 3);
-
 define('ATTEMPT_WINDOW', 900); 
-
+$cookie_expiration = time() + ATTEMPT_WINDOW;
 $obj_funciones = new funciones();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $client_ip = $_SERVER['REMOTE_ADDR'];
+
     if (!isset($_COOKIE['failed_attempts_' . $username])) {
-        setcookie('failed_attempts_' . $username, 0, time() + ATTEMPT_WINDOW, "/");
-        setcookie('first_attempt_time_' . $username, time(), time() + ATTEMPT_WINDOW, "/");
+        setcookie('failed_attempts_' . $username, $failed_attempts, $cookie_expiration, "/");
+setcookie('first_attempt_time_' . $username, $first_attempt_time, $cookie_expiration, "/");
     }
 
     $failed_attempts = (int)$_COOKIE['failed_attempts_' . $username];
@@ -37,11 +37,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $first_attempt_time = time();
         }
     }
+
     $login_success = $obj_funciones->verificar_login($username, $password);
 
     if ($login_success) {
         setcookie('failed_attempts_' . $username, 0, time() + ATTEMPT_WINDOW, "/");
         logAttempt($logFile, $username, $client_ip, "Inicio de sesión exitoso");
+
         $verification_code = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}[]|\/?><'), 0, 6);
         $_SESSION['verification_code'] = $verification_code;
         $_SESSION['username'] = $username;
@@ -56,10 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $failed_attempts++;
         setcookie('failed_attempts_' . $username, $failed_attempts, time() + ATTEMPT_WINDOW, "/");
-        
+
         if ($failed_attempts == 1) {
             setcookie('first_attempt_time_' . $username, time(), time() + ATTEMPT_WINDOW, "/");
         }
+
         logAttempt($logFile, $username, $client_ip, "Intento fallido - Credenciales incorrectas");
         header("Location: ../index.php?error=1"); 
         exit();
